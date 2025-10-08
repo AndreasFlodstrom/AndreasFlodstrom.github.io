@@ -7,8 +7,13 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  
   <header id="hero">
-    <div class="container">
+  <div class="container">
+    <div class="pfp-wrapper">
+  <img src="images/profilepic.jpg" class="profile-pic">
+</div>
+    <div class="text-content">
       <h1>Andreas Flodström</h1>
       <p>Gameplay Programmer / Systems Developer / Game Dev</p>
       <nav>
@@ -20,7 +25,9 @@
         </ul>
       </nav>
     </div>
-  </header>
+  </div>
+</header>
+
 
   <section id="about">
     <div class="container">
@@ -33,11 +40,12 @@
 
   <section id="projects">
   <div class="container">
-    <h2>Projects</h2>
+    <h1>Projects</h1>
     <div class="project-list">
 
       <!-- Project 1 -->
       <a href="Projects/Colosseum.html" class="project-item" id="Colosseum">
+        <img src="images/Colloseum.png" alt="Santa game" class="project-image">
         <h3>Colosseum</h3>
         <p>A small 2D platformer combat game.</p>
         <p><strong>Duration:</strong> 2 months</p>
@@ -46,6 +54,7 @@
 
       <!-- Project 2 -->
       <a href="Projects/hearthstone.html" class="project-item" id="Hearthstone">
+        <img src="images/SantaImage.png" alt="Santa game" class="project-image">
         <h3>Heartstone</h3>
         <p>A demo copy of the game Hearthstone.</p>
         <p><strong>Duration:</strong> 2 months</p>
@@ -53,12 +62,14 @@
       </a>
       <!-- Project 3 -->
       <a href="Projects/SantaGame.html" class="project-item" id="SantaGame">
+        <img src="images/SantaImage.png" alt="Santa game" class="project-image">
         <h3>Santa game</h3>
         <p>OverCooked inspired christmas game </p>
         <p><strong>Duration:</strong> 4 months</p>
         <p><strong>Technologies:</strong> C#, Unity, Blender</p>
       </a><!-- Project 4 -->
       <a href="Projects/ToadallyLit.html" class="project-item" id="ToadallyLit">
+        <img src="images/ToadallyLit2.png" alt="Santa game" class="project-image">
         <h3>ToadallyLit</h3>
         <p>First Unity school project </p>
         <p><strong>Duration:</strong> 1 months</p>
@@ -71,28 +82,42 @@
 
 
   <section id="experience">
-    <div class="container">
-      <h2>Education & Technical Skills</h2>
-      <div class="education">
+  <div class="container experience-container">
+
+    <!-- Education Block -->
+    <div class="education">
+      <h2>Education</h2>
+
+      <div class="school">
         <h3>Södertörns Högskola (2024 – 2027)</h3>
         <p>Game Developer | Designer</p>
       </div>
-      <div class="skills">
-        <h3>Technical Skills</h3>
-        <ul>
-          <li>JavaScript</li>
-          <li>Unity / C#</li>
-          <li>JavaScript / Web Dev</li>
-          <li>Blender</li>
-          <li>Mirror(Unity)</li>
-          
-        </ul>
-      </div>
-    </div>
-  </section>
 
-  <section id="contact">
-    <div class="container">
+      
+    </div>
+
+    <!-- Skills Block -->
+    <div class="skills">
+      <h2>Technical Skills</h2>
+      <ul>
+        <li>JavaScript</li>
+        <li>Unity / C#</li>
+        <li>Web Development</li>
+        <li>Blender</li>
+        <li>Mirror (Unity)</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+
+
+ 
+
+  <footer>
+  <div class="footer-container">
+    <div class="contact-info">
       <h2>Contact</h2>
       <p>You can find me on social media or via email:</p>
       <ul class="social-links">
@@ -101,13 +126,13 @@
         <li><a href="mailto:andreas.flodan@hotmail.com">Email me</a></li>
       </ul>
     </div>
-  </section>
 
-  <footer>
-    <div class="container">
+    <div class="footer-copy">
       <p>© 2025 Andreas Flodström — All rights reserved.</p>
     </div>
-  </footer>
+  </div>
+</footer>
+
 
   <script src="script.js"></script>
 </body>
