@@ -85,6 +85,33 @@
       <img src="/images/Colloseum.png" alt="Boss stage transition in Colosseum, Unity platformer" class="project-image" />
     </div>
   </section>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const links = document.querySelectorAll('a[href]');
+
+  links.forEach(link => {
+    const url = link.getAttribute('href');
+
+    if (url && !url.startsWith('http') && !url.startsWith('#')) {
+      // When hovering the link, prefetch the page and its hero image
+      link.addEventListener('mouseenter', () => {
+        // Prefetch page
+        const prefetchLink = document.createElement('link');
+        prefetchLink.rel = 'prefetch';
+        prefetchLink.href = url;
+        document.head.appendChild(prefetchLink);
+
+        // Preload hero image
+        const pageName = url.replace(/\/|\.html/g, '');
+        const heroImgPath = `/images/${pageName}.png`;
+
+        const img = new Image();
+        img.src = heroImgPath;
+      }, { once: true }); // only trigger once per link
+    }
+  });
+});
+</script>
 
 </body>
 </html>
