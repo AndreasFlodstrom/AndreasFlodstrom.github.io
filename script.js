@@ -8,3 +8,23 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     }
   });
 });
+(function() {
+  const ease = 0.05; 
+  let target = window.scrollY;
+  let current = window.scrollY;
+
+  function update() {
+    current += (target - current) * ease;
+    window.scrollTo(0, current);
+    requestAnimationFrame(update);
+  }
+
+  window.addEventListener('wheel', (e) => {
+    e.preventDefault(); 
+    target += e.deltaY;
+    
+    target = Math.max(0, Math.min(target, document.body.scrollHeight - window.innerHeight));
+  }, { passive: false });
+
+  update();
+})();
