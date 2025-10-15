@@ -9,10 +9,6 @@ body {
   line-height: 1.6;
   color: #ffffff;
   background:  #02030f;
-
-  
-  
-;
 }
 
 .container {
@@ -71,23 +67,24 @@ header#hero nav a {
   height: 200px;
   border-radius: 50%;
   border: 3px solid #f5f5f5;
-  overflow: hidden; /* hides edges when zoomed */
+  overflow: hidden;
+  transition: transform 0.4s ease; /* smooth zoom in AND out */
+  transform: scale(1); /* start at normal size */
+}
+
+.pfp-wrapper:hover {
+  transform: scale(1.3); /* zoom in on hover */
 }
 
 .profile-pic {
   width: 100%;
   height: 100%;
-  object-fit: cover;       
-  object-position: center; 
-  transition: transform 0.4s ease;
-  transform: scale(1.8); 
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.4s ease; /* smooth zoom in/out if needed */
+  transform: scale(1.8); /* your existing image zoom */
 }
 
-
-.pfp-wrapper:hover  {
-  transform:scale(1.3);
-  transition: transform 0.4s ease;
-}
 
 
 section {
