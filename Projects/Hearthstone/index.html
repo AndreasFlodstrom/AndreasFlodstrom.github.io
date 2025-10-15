@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hearthstone | Card Game Replica Project by Andreas Flodström</title>
+
+  <meta name="description" content="A Unity-made replica of Blizzard's Hearthstone, developed by Andreas Flodström and team. Features JSON-based deck management and local data serialization." />
+  <meta name="keywords" content="Hearthstone, Unity, card game, C#, JSON, database system, Andreas Flodström, game developer, portfolio, multiplayer, Mirror, deck builder" />
+  <meta name="author" content="Andreas Flodström" />
+  <link rel="canonical" href="https://yourwebsite.com/Projects/Hearthstone.html" />
+  <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Hearthstone | Unity Card Game Replica by Andreas Flodström" />
+  <meta property="og:description" content="A team-built Hearthstone replica in Unity by Andreas Flodström. Includes a full local JSON-based deck system." />
+  <meta property="og:image" content="https://yourwebsite.com/images/Hearthstone.png" />
+  <meta property="og:url" content="https://yourwebsite.com/Projects/Hearthstone.html" />
+  <meta property="og:type" content="website" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Hearthstone | Unity Card Game Replica by Andreas Flodström" />
+  <meta name="twitter:description" content="A Unity recreation of Hearthstone featuring local JSON-based deck storage, developed by Andreas Flodström." />
+  <meta name="twitter:image" content="https://yourwebsite.com/images/Hearthstone.png" />
+
+  <!-- Schema.org Project Markup -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    "name": "Hearthstone Replica",
+    "url": "https://yourwebsite.com/Projects/Hearthstone.html",
+    "image": "https://yourwebsite.com/images/Hearthstone.png",
+    "author": {
+      "@type": "Person",
+      "name": "Andreas Flodström",
+      "url": "https://yourwebsite.com"
+    },
+    "gamePlatform": ["PC"],
+    "applicationCategory": "Game",
+    "genre": ["Card Game", "Strategy"],
+    "about": "Unity recreation of Hearthstone, featuring JSON-based deck creation and local storage.",
+    "creator": {
+      "@type": "Person",
+      "name": "Andreas Flodström"
+    },
+    "keywords": ["Unity", "C#", "JSON", "Card Game", "Hearthstone", "Game Development"]
+  }
+  </script>
+
+  <link rel="stylesheet" href="hearthstone.css" />
+</head>
+
+<body>
+
+  <!-- Hero Section -->
+  <header class="project-hearthstone">
+    <div class="container">
+      <h1>Hearthstone</h1>
+      <p>Card Game</p>
+      <a href="/" class="btn-back" aria-label="Back to portfolio home page">← Back to Portfolio</a>
+    </div>
+  </header>
+
+  <!-- Project Details -->
+  <section class="project-details">
+    <div class="container">
+      <h2>About the Project</h2>
+      <p>
+        This project was developed collaboratively with a team of 33 people to recreate Blizzard Entertainment’s iconic card game, Hearthstone.
+        The goal was to reproduce the game’s mechanics, visuals, and systems in Unity while learning large-scale project collaboration and code structure.
+      </p>
+
+      <h3>My Role</h3>
+      <p>
+        I was in charge of the database group, consisting of nine developers. Our objective was to design and implement the deck creation and card collection systems, 
+        ensuring that data could be saved locally on the player’s machine.  
+        <br><br>
+        Ultimately, I implemented most of the system myself. The database relies on JSON serializers to read and write data locally. 
+        Each card is implemented using Unity’s <em>ScriptableObject</em> system, allowing for flexible card data storage and editing.
+      </p>
+
+      <pre><code>
+// Example concept (simplified)
+[System.Serializable]
+public class CardData {
+    public string Name;
+    public int ManaCost;
+    public string Description;
+}
+
+public class DeckManager {
+    public List<CardData> Cards;
+    public void SaveToJson() { ... }
+    public void LoadFromJson() { ... }
+}
+      </code></pre>
+
+      <h3>Project Info</h3>
+      <ul>
+        <li><strong>Duration:</strong> 1 month</li>
+        <li><strong>Technologies:</strong> C#, Unity, JSON</li>
+        <li><strong>Role:</strong> Lead Database Designer, Scrum Master</li>
+      </ul>
+
+      <h3>Screenshots</h3>
+      <div class="project-images">
+        <div class="project-image">
+          <p class="caption">Menu</p>
+          <img src="/images/Hearthstone1.png" alt="Hearthstone character selection screen built in Unity" />
+        </div>
+
+        <div class="project-image">
+          <p class="caption">Collection</p>
+          <img src="/images/Hearthstone.png" alt="Hearthstone environment board UI recreated in Unity" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

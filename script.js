@@ -34,3 +34,10 @@
 
   update();
 })();
+
+// Only redirect on GitHub Pages, not local files
+if (location.hostname.includes("github.io") && window.location.pathname.endsWith('.html')) {
+  const newPath = window.location.pathname.replace('.html', '/');
+  window.location.replace(newPath);
+}
+
