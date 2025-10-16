@@ -64,10 +64,7 @@
     }
 
     @keyframes slideInRight {
-      to {
-        transform: translateX(0);
-        opacity: 1;
-      }
+      to { transform: translateX(0); opacity: 1; }
     }
   </style>
 </head>
@@ -96,10 +93,7 @@
   <section id="about">
     <div class="container">
       <h2>Hi, I'm Andreas Flodström</h2>
-      <p>
-        I am an aspiring game developer focusing on multiplayer using the Unity Mirror framework. 
-        I like to constantly challenge myself and learn new things to be able to do all parts of a game — graphics, development, sound, multiplayer, and more.
-      </p>
+      <p>I am an aspiring game developer focusing on multiplayer using the Unity Mirror framework. I like to constantly challenge myself and learn new things to be able to do all parts of a game — graphics, development, sound, multiplayer, and more.</p>
     </div>
   </section>
 
@@ -107,39 +101,29 @@
     <div class="container">
       <h2>Projects</h2>
       <div class="project-list">
-
-        <a href="Projects/Colosseum/" class="project-item" id="Colosseum" data-project="colosseum">
+        <a href="Projects/Colosseum/" class="project-item" id="Colosseum">
           <img src="images/Colloseum.png" alt="Screenshot of Colosseum, a 2D platformer combat game" class="project-image">
           <h3>Colosseum</h3>
           <p>A small 2D platformer combat game.</p>
-          <p><strong>Duration:</strong> 2 months</p>
-          <p><strong>Technologies:</strong> C#, Unity, Blender</p>
         </a>
 
-        <a href="Projects/Hearthstone/" class="project-item" id="Hearthstone" data-project="hearthstone">
+        <a href="Projects/Hearthstone/" class="project-item" id="Hearthstone">
           <img src="images/Hearthstone.png" alt="Clone of Hearthstone card game built in Unity" class="project-image">
           <h3>Hearthstone</h3>
           <p>A demo copy of the game Hearthstone.</p>
-          <p><strong>Duration:</strong> 2 months</p>
-          <p><strong>Technologies:</strong> C#, Unity</p>
         </a>
 
-        <a href="Projects/SantaGame/" class="project-item" id="SantaGame" data-project="santa">
+        <a href="Projects/SantaGame/" class="project-item" id="SantaGame">
           <img src="images/SantaImage.png" alt="Co-op Christmas game inspired by Overcooked" class="project-image">
           <h3>Santa Game</h3>
           <p>OverCooked-inspired co-op Christmas game.</p>
-          <p><strong>Duration:</strong> 4 months</p>
-          <p><strong>Technologies:</strong> C#, Unity, Blender</p>
         </a>
 
-        <a href="Projects/ToadallyLit/" class="project-item" id="ToadallyLit" data-project="toadallylit">
+        <a href="Projects/ToadallyLit/" class="project-item" id="ToadallyLit">
           <img src="images/ToadallyLit2.png" alt="Toadally Lit — Unity school project platformer" class="project-image">
           <h3>Toadally Lit</h3>
           <p>First Unity school project.</p>
-          <p><strong>Duration:</strong> 1 month</p>
-          <p><strong>Technologies:</strong> C#, Unity</p>
         </a>
-
       </div>
     </div>
   </section>
@@ -153,6 +137,7 @@
           <p>Game Developer | Designer</p>
         </div>
       </div>
+
       <div class="skills">
         <h2>Technical Skills</h2>
         <ul>
@@ -171,11 +156,10 @@
     <div class="footer-container">
       <div class="contact-info">
         <h2>Contact</h2>
-        <p>You can find me on social media or via email:</p>
         <ul class="social-links" id="contact">
-          <li><a href="https://github.com/AndreasFlodstrom">View my GitHub projects</a></li>
-          <li><a href="https://www.linkedin.com/in/andreas-flodstr%C3%B6m-a22805236/">Connect on LinkedIn</a></li>
-          <li><a href="mailto:andreas.flodan@hotmail.com">Email Andreas Flodström</a></li>
+          <li><a href="https://github.com/AndreasFlodstrom">GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/andreas-flodstr%C3%B6m-a22805236/">LinkedIn</a></li>
+          <li><a href="mailto:andreas.flodan@hotmail.com">Email</a></li>
         </ul>
       </div>
       <div class="footer-copy">
@@ -184,59 +168,93 @@
     </div>
   </footer>
 
-  <!-- Script: Slide transitions, prefetch, last-project scroll -->
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const links = document.querySelectorAll('a[href]');
-      const projectLinks = document.querySelectorAll('.project-list a');
+  (function() {
+    /* Smooth scrolling */
+    const ease = 0.05;
+    let target = window.scrollY;
+    let current = window.scrollY;
 
-      // Save clicked project before leaving
-      projectLinks.forEach(link => {
-        link.addEventListener('click', () => {
-          sessionStorage.setItem('lastProject', link.id);
-        });
-      });
-
-      // Slide transition + prefetch
-      links.forEach(link => {
-        const url = link.getAttribute('href');
-        if (url && !url.startsWith('http') && !url.startsWith('#')) {
-          link.addEventListener('click', (e) => {
-            e.preventDefault();
-            document.body.classList.add('page-exit-left');
-            setTimeout(() => {
-              window.location.href = url;
-            }, 300);
-          });
-          link.addEventListener('mouseenter', () => {
-            const prefetch = document.createElement('link');
-            prefetch.rel = 'prefetch';
-            prefetch.href = url;
-            document.head.appendChild(prefetch);
-            const pageName = url.replace(/\/|\.html/g,'');
-            const img = new Image();
-            img.src = `/images/${pageName}.png`;
-          }, { once: true });
-        }
-      });
-
-      // Scroll to last clicked project on normal load
-      scrollToLastProject();
-    });
-
-    function scrollToLastProject() {
-      const lastProject = sessionStorage.getItem('lastProject');
-      if (lastProject) {
-        const el = document.getElementById(lastProject);
-        if (el) window.scrollTo(0, el.offsetTop);
-        sessionStorage.removeItem('lastProject');
-      }
+    function update() {
+      current += (target - current) * ease;
+      window.scrollTo(0, current);
+      requestAnimationFrame(update);
     }
 
-    // Handle back/forward (bfcache)
-    window.addEventListener('pageshow', (event) => {
-      if (event.persisted) scrollToLastProject();
+    window.addEventListener('wheel', e => {
+      e.preventDefault();
+      target += e.deltaY;
+      target = Math.max(0, Math.min(target, document.body.scrollHeight - window.innerHeight));
+    }, { passive: false });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href').slice(1);
+        const targetEl = document.getElementById(targetId);
+        if (targetEl) target = targetEl.offsetTop;
+      });
     });
+
+    update();
+  })();
+
+  /* Handle GitHub Pages .html → / redirect */
+  if (location.hostname.includes("github.io") && window.location.pathname.endsWith('.html')) {
+    const newPath = window.location.pathname.replace('.html', '/');
+    window.location.replace(newPath);
+  }
+
+  /* Handle slide transitions and prefetch */
+  document.addEventListener('DOMContentLoaded', () => {
+    const links = document.querySelectorAll('a[href]');
+    links.forEach(link => {
+      const url = link.getAttribute('href');
+      if (url && !url.startsWith('http') && !url.startsWith('#')) {
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          document.body.classList.add('page-exit-left');
+          setTimeout(() => window.location.href = url, 300);
+        });
+
+        link.addEventListener('mouseenter', () => {
+          const prefetch = document.createElement('link');
+          prefetch.rel = 'prefetch';
+          prefetch.href = url;
+          document.head.appendChild(prefetch);
+
+          const pageName = url.replace(/\/|\.html/g,'');
+          const img = new Image();
+          img.src = `/images/${pageName}.png`;
+        }, { once: true });
+      }
+    });
+  });
+
+  /* Scroll to last clicked project on back/forward navigation */
+  function scrollToLastProject() {
+    const lastProject = sessionStorage.getItem('lastProject');
+    if (lastProject) {
+      const el = document.getElementById(lastProject);
+      if (el) window.scrollTo(0, el.offsetTop);
+      sessionStorage.removeItem('lastProject');
+    }
+  }
+
+  window.addEventListener('pageshow', event => {
+    if (event.persisted) scrollToLastProject();
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    /* Save project clicks */
+    document.querySelectorAll('.project-list a').forEach(link => {
+      link.addEventListener('click', () => {
+        sessionStorage.setItem('lastProject', link.id);
+      });
+    });
+    scrollToLastProject();
+  });
   </script>
+
 </body>
 </html>
