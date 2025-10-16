@@ -169,92 +169,84 @@
   </footer>
 
   <script>
-  (function() {
-    /* Smooth scrolling */
-    const ease = 0.05;
-    let target = window.scrollY;
-    let current = window.scrollY;
+(function() {
+  const ease = 0.05;
+  let target = window.scrollY;
+  let current = window.scrollY;
+  let initialized = false;
 
-    function update() {
-      current += (target - current) * ease;
-      window.scrollTo(0, current);
-      requestAnimationFrame(update);
-    }
-
-    window.addEventListener('wheel', e => {
-      e.preventDefault();
-      target += e.deltaY;
-      target = Math.max(0, Math.min(target, document.body.scrollHeight - window.innerHeight));
-    }, { passive: false });
-
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href').slice(1);
-        const targetEl = document.getElementById(targetId);
-        if (targetEl) target = targetEl.offsetTop;
-      });
-    });
-
-    update();
-  })();
-
-  /* Handle GitHub Pages .html → / redirect */
-  if (location.hostname.includes("github.io") && window.location.pathname.endsWith('.html')) {
-    const newPath = window.location.pathname.replace('.html', '/');
-    window.location.replace(newPath);
+  function update() {
+    current += (target - current) * ease;
+    window.scrollTo(0, current);
+    requestAnimationFrame(update);
   }
 
-  /* Handle slide transitions and prefetch */
-  document.addEventListener('DOMContentLoaded', () => {
-    const links = document.querySelectorAll('a[href]');
-    links.forEach(link => {
-      const url = link.getAttribute('href');
-      if (url && !url.startsWith('http') && !url.startsWith('#')) {
-        link.addEventListener('click', e => {
-          e.preventDefault();
-          document.body.classList.add('page-exit-left');
-          setTimeout(() => window.location.href = url, 300);
-        });
+  // Handle scroll wheel
+  window.addEventListener('wheel', e => {
+    e.preventDefault();
+    target += e.deltaY;
+    target = Math.max(0, Math.min(target, document.body.scrollHeight - window.innerHeight));
+  }, { passive: false });
 
-        link.addEventListener('mouseenter', () => {
-          const prefetch = document.createElement('link');
-          prefetch.rel = 'prefetch';
-          prefetch.href = url;
-          document.head.appendChild(prefetch);
-
-          const pageName = url.replace(/\/|\.html/g,'');
-          const img = new Image();
-          img.src = `/images/${pageName}.png`;
-        }, { once: true });
-      }
+  // Handle anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const targetId = this.getAttribute('href').slice(1);
+      const targetEl = document.getElementById(targetId);
+      if (targetEl) target = targetEl.offsetTop;
     });
   });
 
-  /* Scroll to last clicked project on back/forward navigation */
+  // Scroll to last clicked project on back navigation
   function scrollToLastProject() {
+    if (initialized) return;
     const lastProject = sessionStorage.getItem('lastProject');
     if (lastProject) {
       const el = document.getElementById(lastProject);
-      if (el) window.scrollTo(0, el.offsetTop);
+      if (el) {
+        // Instantly jump to element first
+        window.scrollTo(0, el.offsetTop);
+        target = el.offsetTop; // smooth scroll starts from correct spot
+      }
       sessionStorage.removeItem('lastProject');
     }
+    initialized = true;
   }
 
-  window.addEventListener('pageshow', event => {
-    if (event.persisted) scrollToLastProject();
+  window.addEventListener('pageshow', event => scrollToLastProject());
+  document.addEventListener('DOMContentLoaded', scrollToLastProject);
+
+  update();
+
+  // -------------------- Slide Transition --------------------
+  const links = document.querySelectorAll('a[href]');
+  links.forEach(link => {
+    const url = link.getAttribute('href');
+    if (url && !url.startsWith('http') && !url.startsWith('#')) {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        document.body.classList.add('page-exit-left');
+        setTimeout(() => window.location.href = url, 300);
+      });
+
+      // Prefetch page images
+      link.addEventListener('mouseenter', () => {
+        const prefetch = document.createElement('link');
+        prefetch.rel = 'prefetch';
+        prefetch.href = url;
+        document.head.appendChild(prefetch);
+
+        const pageName = url.replace(/\/|\.html/g,'');
+        const img = new Image();
+        img.src = `/images/${pageName}.png`;
+      }, { once: true });
+    }
   });
 
-  document.addEventListener('DOMContentLoaded', () => {
-    /* Save project clicks */
-    document.querySelectorAll('.project-list a').forEach(link => {
-      link.addEventListener('click', () => {
-        sessionStorage.setItem('lastProject', link.id);
-      });
-    });
-    scrollToLastProject();
-  });
-  </script>
+})();
+</script>
+
 
 </body>
 </html>
