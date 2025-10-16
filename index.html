@@ -25,26 +25,6 @@
   <meta name="twitter:image" content="https://yourwebsite.com/images/profilepic.jpg" />
 
   <!-- Schema.org Person Markup -->
-   <script>  document.addEventListener('DOMContentLoaded', () => {
-  // Scroll immediately to last clicked project
-  const lastProject = sessionStorage.getItem('lastProject');
-  if (lastProject) {
-    const element = document.getElementById(lastProject);
-    if (element) {
-      // Set scrollTop to element's offsetTop
-      window.scrollTo(0, element.offsetTop);
-    }
-    sessionStorage.removeItem('lastProject');
-  }
-
-  // Save clicked project ID before leaving
-  const projectLinks = document.querySelectorAll('.project-list a');
-  projectLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      sessionStorage.setItem('lastProject', link.id);
-    });
-  });
-});</script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -72,13 +52,11 @@
       overflow-x: hidden;
     }
 
-    /* Slide left when navigating away */
     .page-exit-left {
       transform: translateX(-100%);
       opacity: 0;
     }
 
-    /* Slide right when coming back from project (optional on project pages) */
     .page-enter-right {
       transform: translateX(100%);
       opacity: 0;
@@ -130,7 +108,6 @@
       <h2>Projects</h2>
       <div class="project-list">
 
-        <!-- Project 1 -->
         <a href="Projects/Colosseum/" class="project-item" id="Colosseum" data-project="colosseum">
           <img src="images/Colloseum.png" alt="Screenshot of Colosseum, a 2D platformer combat game" class="project-image">
           <h3>Colosseum</h3>
@@ -139,7 +116,6 @@
           <p><strong>Technologies:</strong> C#, Unity, Blender</p>
         </a>
 
-        <!-- Project 2 -->
         <a href="Projects/Hearthstone/" class="project-item" id="Hearthstone" data-project="hearthstone">
           <img src="images/Hearthstone.png" alt="Clone of Hearthstone card game built in Unity" class="project-image">
           <h3>Hearthstone</h3>
@@ -148,7 +124,6 @@
           <p><strong>Technologies:</strong> C#, Unity</p>
         </a>
 
-        <!-- Project 3 -->
         <a href="Projects/SantaGame/" class="project-item" id="SantaGame" data-project="santa">
           <img src="images/SantaImage.png" alt="Co-op Christmas game inspired by Overcooked" class="project-image">
           <h3>Santa Game</h3>
@@ -157,7 +132,6 @@
           <p><strong>Technologies:</strong> C#, Unity, Blender</p>
         </a>
 
-        <!-- Project 4 -->
         <a href="Projects/ToadallyLit/" class="project-item" id="ToadallyLit" data-project="toadallylit">
           <img src="images/ToadallyLit2.png" alt="Toadally Lit — Unity school project platformer" class="project-image">
           <h3>Toadally Lit</h3>
@@ -172,7 +146,6 @@
 
   <section id="experience">
     <div class="container experience-container">
-
       <div class="education">
         <h2>Education</h2>
         <div class="school">
@@ -180,7 +153,6 @@
           <p>Game Developer | Designer</p>
         </div>
       </div>
-
       <div class="skills">
         <h2>Technical Skills</h2>
         <ul>
@@ -192,7 +164,6 @@
           <li>JSON</li>
         </ul>
       </div>
-
     </div>
   </section>
 
@@ -207,24 +178,29 @@
           <li><a href="mailto:andreas.flodan@hotmail.com">Email Andreas Flodström</a></li>
         </ul>
       </div>
-
       <div class="footer-copy">
         <p>© 2025 Andreas Flodström — All rights reserved.</p>
       </div>
     </div>
   </footer>
 
-  <!-- Slide Transition Script -->
+  <!-- Script: Slide transitions, prefetch, last-project scroll -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const links = document.querySelectorAll('a[href]');
+      const projectLinks = document.querySelectorAll('.project-list a');
 
+      // Save clicked project before leaving
+      projectLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          sessionStorage.setItem('lastProject', link.id);
+        });
+      });
+
+      // Slide transition + prefetch
       links.forEach(link => {
         const url = link.getAttribute('href');
-
-        // Only internal page links (ignore external and hash)
         if (url && !url.startsWith('http') && !url.startsWith('#')) {
-          // Click triggers slide-left transition
           link.addEventListener('click', (e) => {
             e.preventDefault();
             document.body.classList.add('page-exit-left');
@@ -232,44 +208,35 @@
               window.location.href = url;
             }, 300);
           });
-
-          // Prefetch page and hero image
           link.addEventListener('mouseenter', () => {
             const prefetch = document.createElement('link');
             prefetch.rel = 'prefetch';
             prefetch.href = url;
             document.head.appendChild(prefetch);
-
             const pageName = url.replace(/\/|\.html/g,'');
             const img = new Image();
             img.src = `/images/${pageName}.png`;
           }, { once: true });
         }
       });
+
+      // Scroll to last clicked project on normal load
+      scrollToLastProject();
     });
 
-
-
-  </script>
-  <script>
-  // Handle scrolling to last clicked project when using back/forward
-  function scrollToLastProject() {
-    const lastProject = sessionStorage.getItem('lastProject');
-    if (lastProject) {
-      const el = document.getElementById(lastProject);
-      if (el) window.scrollTo(0, el.offsetTop);
-      sessionStorage.removeItem('lastProject');
+    function scrollToLastProject() {
+      const lastProject = sessionStorage.getItem('lastProject');
+      if (lastProject) {
+        const el = document.getElementById(lastProject);
+        if (el) window.scrollTo(0, el.offsetTop);
+        sessionStorage.removeItem('lastProject');
+      }
     }
-  }
 
-  // Also run when page is restored from bfcache
-  window.addEventListener('pageshow', (event) => {
-    if (event.persisted) scrollToLastProject();
-  });
-
-  // Run on normal load (in case they refresh)
-  document.addEventListener('DOMContentLoaded', scrollToLastProject);
-</script>
-
+    // Handle back/forward (bfcache)
+    window.addEventListener('pageshow', (event) => {
+      if (event.persisted) scrollToLastProject();
+    });
+  </script>
 </body>
 </html>

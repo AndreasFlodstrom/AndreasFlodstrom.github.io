@@ -103,25 +103,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
-<script>
-  // Handle scrolling to last clicked project when using back/forward
-  function scrollToLastProject() {
-    const lastProject = sessionStorage.getItem('lastProject');
-    if (lastProject) {
-      const el = document.getElementById(lastProject);
-      if (el) window.scrollTo(0, el.offsetTop);
-      sessionStorage.removeItem('lastProject');
-    }
-  }
-
-  // Also run when page is restored from bfcache
-  window.addEventListener('pageshow', (event) => {
-    if (event.persisted) scrollToLastProject();
-  });
-
-  // Run on normal load (in case they refresh)
-  document.addEventListener('DOMContentLoaded', scrollToLastProject);
-</script>
 
 </body>
 </html>
