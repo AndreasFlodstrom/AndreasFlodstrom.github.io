@@ -1,29 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Save Christmas | 3D Co-op Party Game Project</title>
-  <meta name="description" content="Save Christmas is a 3D co-op party game inspired by Overcooked. Work with or against friends to assemble toys before time runs out. Built in Unity using Mirror networking.">
-  <meta name="keywords" content="Save Christmas, 3D game, co-op game, Unity, Mirror, SteamSDK, Blender, multiplayer, Overcooked inspired, game development, portfolio">
-  <meta name="author" content="Andreas Flodstroem">
-
-  <!-- Open Graph / Social Media Meta -->
-  <meta property="og:title" content="Save Christmas | 3D Co-op Party Game Project">
-  <meta property="og:description" content="A multiplayer co-op game inspired by Overcooked. Assemble toys with friends and compete to become Santa's best helper.">
-  <meta property="og:image" content="../images/TestSantaImage.png">
-  <meta property="og:type" content="website">
-
-  <link rel="stylesheet" href="Santa.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Save Christmas | 3D Co-op Party Game Project</title>
+<link rel="stylesheet" href="Santa.css">
 </head>
 <body>
+<div id="page-wrapper">
 
   <!-- Hero Section -->
   <header class="project-Santa">
     <div class="container">
-      <h1>Save Christmas</h1>
+      <h1>Project: Santa</h1>
       <p><strong>3D Co-op Party Game</strong></p>
-      <a href="/" class="btn-back">← Back to Portfolio</a>
     </div>
   </header>
 
@@ -32,16 +22,15 @@
     <div class="container">
       <h2>About the Project</h2>
       <p>
-        <em>Save Christmas</em> is a 3D co-op multiplayer game inspired by <strong>Overcooked</strong>. 
+        <em>Project: Santa</em> is a 3D co-op multiplayer game inspired by <strong>Overcooked</strong>. 
         Players work together—or against each other—to assemble as many toys as possible before time runs out.
-        Use abilities to disrupt your opponents and become Santa’s most efficient helper.
       </p>
 
       <h3>Deep Dive</h3>
       <p>
         This project was created as a personal challenge to push my game development skills. I designed all aspects of the game—from gameplay logic to 3D modeling in Blender. 
-        Networking is powered by the <strong>Mirror</strong> framework to simplify multiplayer development and allow focus on gameplay systems. 
-        The game also integrates with <strong>SteamSDK</strong> for online play and achievements.
+        Networking is powered by <strong>Mirror</strong> for multiplayer support. 
+        SteamSDK integration provides achievements and online play.
       </p>
 
       <h3>Project Info</h3>
@@ -55,42 +44,51 @@
       <div class="project-images">
         <div class="project-image">
           <p class="caption">Toy Assembly Area</p>
-          <img src="/images/SantaImg2.png" alt="Save Christmas co-op toy assembly area screenshot" class="project-image">
+          <img src="/images/SantaImg2.png" alt="Save Christmas co-op toy assembly area screenshot">
         </div>
         <div class="project-image">
           <p class="caption">Gameplay Scene</p>
-          <img src="/images/SantaImage.png" alt="Save Christmas gameplay showing players working together" class="project-image">
+          <img src="/images/SantaImage.png" alt="Save Christmas gameplay showing players working together">
         </div>
       </div>
     </div>
   </section>
+</div>
+
+<!-- Floating Back Button -->
+<a href="/" class="btn-back">← Back to Portfolio</a>
+
+<!-- JS for slide animation and prefetch -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const links = document.querySelectorAll('a[href]');
+  const pageWrapper = document.getElementById('page-wrapper');
 
   links.forEach(link => {
     const url = link.getAttribute('href');
+    if(!url || url.startsWith('http') || url.startsWith('#')) return;
 
-    if (url && !url.startsWith('http') && !url.startsWith('#')) {
-      // When hovering the link, prefetch the page and its hero image
-      link.addEventListener('mouseenter', () => {
-        // Prefetch page
-        const prefetchLink = document.createElement('link');
-        prefetchLink.rel = 'prefetch';
-        prefetchLink.href = url;
-        document.head.appendChild(prefetchLink);
+    link.addEventListener('click', function(e){
+      e.preventDefault();
+      if(link.classList.contains('btn-back')){
+        document.body.classList.add('page-exit-right');
+      } else {
+        document.body.classList.add('page-exit-left');
+      }
+      setTimeout(() => window.location.href = url, 200);
+    });
 
-        // Preload hero image
-        const pageName = url.replace(/\/|\.html/g, '');
-        const heroImgPath = `/images/${pageName}.png`;
+    link.addEventListener('mouseenter', () => {
+      const prefetchLink = document.createElement('link');
+      prefetchLink.rel = 'prefetch';
+      prefetchLink.href = url;
+      document.head.appendChild(prefetchLink);
 
-        const img = new Image();
-        img.src = heroImgPath;
-      }, { once: true }); // only trigger once per link
-    }
+      const heroImg = new Image();
+      heroImg.src = '/images/SantaImage.png';
+    }, { once: true });
   });
 });
 </script>
-
 </body>
 </html>

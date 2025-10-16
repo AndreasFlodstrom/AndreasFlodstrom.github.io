@@ -1,29 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Toadally Lit | 2D Platformer Combat Game</title>
-  <meta name="description" content="Toadally Lit (Colosseum) is a 2D platformer combat game built in Unity. Features boss fights, hand-crafted environments, and a focus on fast-paced gameplay.">
-  <meta name="keywords" content="Toadally Lit, Colosseum, 2D platformer, Unity, C#, Blender, boss fight, indie game, portfolio project">
-  <meta name="author" content="Andreas Flodstroem">
-
-  <!-- Open Graph / Social Meta -->
-  <meta property="og:title" content="Toadally Lit | 2D Platformer Combat Game">
-  <meta property="og:description" content="A Unity 2D platformer project featuring fast-paced boss battles and handmade 3D assets.">
-  <meta property="og:image" content="../images/ToadallyLit.png">
-  <meta property="og:type" content="website">
-
-  <link rel="stylesheet" href="ToadallyLit.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toadally Lit | 2D Platformer Combat Game</title>
+<link rel="stylesheet" href="ToadallyLit.css">
 </head>
 <body>
+<div id="page-wrapper">
 
   <!-- Hero Section -->
   <header class="project-ToadallyLit">
     <div class="container">
       <h1>Toadally Lit</h1>
       <p>2D Platformer Combat Game</p>
-      <a href="/" class="btn-back">← Back to Portfolio</a>
     </div>
   </header>
 
@@ -32,14 +22,13 @@
     <div class="container">
       <h2>About the Project</h2>
       <p>
-        <em>Toadally Lit</em> (originally titled <strong>Colosseum</strong>) was my first Unity project — a 2D platformer combat game focused on responsive controls and engaging boss battles. 
-        The game challenges players through multiple combat stages, combining timing and movement precision to win each encounter.
+        <em>Toadally Lit</em> (originally <strong>Colosseum</strong>) is a 2D platformer combat game focused on responsive controls and challenging boss battles. 
       </p>
 
       <h3>Development Details</h3>
       <p>
-        As my introduction to Unity, this project helped me learn the fundamentals of physics interactions, sprite animation, and enemy AI design. 
-        I also used Blender to model basic 3D elements and export them into the 2D environment, creating a layered and dynamic look.
+        This project taught me Unity fundamentals including physics interactions, sprite animation, and enemy AI design. 
+        Blender was used for 3D assets exported into the 2D environment to enhance visual depth.
       </p>
 
       <h3>Project Info</h3>
@@ -63,33 +52,42 @@
       </div>
     </div>
   </section>
+</div>
+
+<!-- Floating Back Button -->
+<a href="/" class="btn-back">← Back to Portfolio</a>
+
+<!-- JS for slide animation and prefetch -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const links = document.querySelectorAll('a[href]');
+  const pageWrapper = document.getElementById('page-wrapper');
 
   links.forEach(link => {
     const url = link.getAttribute('href');
+    if(!url || url.startsWith('http') || url.startsWith('#')) return;
 
-    if (url && !url.startsWith('http') && !url.startsWith('#')) {
-      // When hovering the link, prefetch the page and its hero image
-      link.addEventListener('mouseenter', () => {
-        // Prefetch page
-        const prefetchLink = document.createElement('link');
-        prefetchLink.rel = 'prefetch';
-        prefetchLink.href = url;
-        document.head.appendChild(prefetchLink);
+    link.addEventListener('click', function(e){
+      e.preventDefault();
+      if(link.classList.contains('btn-back')){
+        document.body.classList.add('page-exit-right');
+      } else {
+        document.body.classList.add('page-exit-left');
+      }
+      setTimeout(() => window.location.href = url, 200);
+    });
 
-        // Preload hero image
-        const pageName = url.replace(/\/|\.html/g, '');
-        const heroImgPath = `/images/${pageName}.png`;
+    link.addEventListener('mouseenter', () => {
+      const prefetchLink = document.createElement('link');
+      prefetchLink.rel = 'prefetch';
+      prefetchLink.href = url;
+      document.head.appendChild(prefetchLink);
 
-        const img = new Image();
-        img.src = heroImgPath;
-      }, { once: true }); // only trigger once per link
-    }
+      const heroImg = new Image();
+      heroImg.src = '/images/ToadallyLit2.png';
+    }, { once: true });
   });
 });
 </script>
-
 </body>
 </html>
